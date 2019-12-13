@@ -19,7 +19,16 @@
         ['ISR',    81.55,              2.96,      'Middle East',    7485600],
         ['RUS',    68.6,               1.54,      'Europe',         141850000],
         ['USA',    78.09,              2.05,      'North America',  307007000]
-      ]);
+      ]
+      
+      
+      
+      
+      
+      
+      
+      
+      );
 
       var options = {
         title: 'Correlation between life expectancy, fertility rate ' +

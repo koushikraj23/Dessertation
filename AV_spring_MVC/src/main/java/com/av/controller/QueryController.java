@@ -9,21 +9,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.av.model.UserDetails;
-import com.av.model.data;
-import com.av.service.UserService;
+import com.av.model.QueryDetails;
+import com.av.model.QueryPair;
+import com.av.model.QueryData;
+import com.av.service.QueryService;
 
 @Controller
-public class UserController {
+public class QueryController {
 	
 	@Autowired
-	private UserService userService;
+	private QueryService queryService;
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ResponseEntity<List<data>> userDetails() {
-
-		List<data> data = userService.getUserDetails();
-		return new ResponseEntity<List<data>>(data, HttpStatus.OK);
+	public ResponseEntity<QueryPair> userDetails() {
+String r="";
+QueryPair data = queryService.getQueryData(r);
+		return new ResponseEntity<QueryPair>(data, HttpStatus.OK);
 	}
 
 }
+
