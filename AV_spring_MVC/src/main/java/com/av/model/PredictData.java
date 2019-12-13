@@ -7,7 +7,7 @@ import javax.persistence.Column;
 public class PredictData {
 	
 	private int id;
-	private String p_values;
+	private String p_values_1;
 	private String p_values_2;
 	private String p_values_3;
 	private String p_values_4;
@@ -23,10 +23,10 @@ public class PredictData {
 	}
 	
 	public String getP_values() {
-		return p_values;
+		return p_values_1;
 	}
-	public void setP_values(String p_values) {
-		this.p_values = p_values;
+	public void setP_values(String p_values_1) {
+		this.p_values_1 = p_values_1;
 	}
 	
 	public String getP_values_2() {

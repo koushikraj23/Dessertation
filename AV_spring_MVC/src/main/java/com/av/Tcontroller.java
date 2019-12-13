@@ -115,6 +115,12 @@ public class Tcontroller {
 	       model.addAttribute("type",type);
 	        return "graphPage";
 	    }
+	   @GetMapping("/predicts")
+	    public String predictPage(Model model, @RequestParam(value = "type", required = false, defaultValue = "0") String type,@RequestParam(value = "r_id", required = false, defaultValue = "1") String r_id) {
+	       model.addAttribute("id",r_id);
+	       model.addAttribute("type",type);
+	        return "predictPage";
+	    }
 	   @GetMapping("/")
 	    public String homePage() {
 	       

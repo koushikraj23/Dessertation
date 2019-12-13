@@ -19,7 +19,7 @@
 
 
 <nav class="navbar navbar-light navbar-expand-md bg-light">
-    <a href="/" class="navbar-brand">Brand</a>
+    <a href="/" class="navbar-brand">Query Addition</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         <span class="navbar-toggler-icon"></span>
     </button>

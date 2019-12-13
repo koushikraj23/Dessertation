@@ -24,7 +24,7 @@
 
 
 <nav class="navbar navbar-light navbar-expand-md bg-light">
-    <a href="/" class="navbar-brand">Brand</a>
+    <a href="/" class="navbar-brand">Query List</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar3">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -83,6 +83,15 @@
              <a href="/graphs?r_id=<%=q.getId() %>&type=7"> Pie</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=8"> Donut</a>
              </td> 
+              <td><a href="/predicts?r_id=<%=q.getId() %>&type=1"> Bar</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=2"> AreaChart</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=3"> Bubble</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=4"> Scatter</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=5"> Histrogram</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=6"> Column</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=7"> Pie</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=8"> Donut</a>
+             </td> 
              <%-- <td> <a href="/graphs?r_id=<%=q.getId() %>"> Graphs</a>
              </td> --%> 
              
@@ -96,9 +105,9 @@
     </div>
         <div class="col-md-3 order-md-1 pt-3">
             <div class="bg-faded mb-3">
-                <h5 class="card-header">List of things</h5>
+                <h5 class="card-header">Under Construction</h5>
                 <div class="card-body">
-                    <h6>Ain't nobody got time for:</h6> 1. That
+                    <h6>Space for template
                 </div>
             </div>
         </div>

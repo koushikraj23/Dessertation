@@ -145,7 +145,7 @@ public class QueryDaoImpl implements QueryDao {
 			@SuppressWarnings("rawtypes")
 			
 			
-			String queryString="SELECT id ,sql_id,p_dates, p_values,IFNULL(p_values_2,0) as p_values_2,IFNULL(p_values_3,0) as p_values_3,IFNULL(p_values_4,0) as p_values_4,IFNULL(p_values_5,0) as p_values_5 FROM prediction where id=5 ;";
+			String queryString="SELECT id ,sql_id,p_dates, p_values_1,IFNULL(p_values_2,0) as p_values_2,IFNULL(p_values_3,0) as p_values_3,IFNULL(p_values_4,0) as p_values_4,IFNULL(p_values_5,0) as p_values_5 FROM prediction where id="+r_id+";";
 			
 
 		
