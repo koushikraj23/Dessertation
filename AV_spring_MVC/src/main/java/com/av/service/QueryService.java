@@ -15,5 +15,7 @@ public interface QueryService {
 	List<QueryDetails> getQueryList() ;
 	void insert(QueryDetails queryDetails);
 	QueryPair  getPredictData(String r_id);
-
+	List<String> getColumnList(String table);
+	List<String> getTableList();
+	List<String> getFK(List<String> table); 
 }

@@ -21,3 +21,7 @@ public class HibernateUtilConfig {
 	    return entityManagerFactory.unwrap(SessionFactory.class);
 	}
 }
+
+
+
+

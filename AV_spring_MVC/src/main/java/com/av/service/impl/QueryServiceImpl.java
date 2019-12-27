@@ -38,4 +38,16 @@ public QueryPair  getPredictData(String r_id) {
 	return queryDao.getPredictData( r_id);
 
 }
+
+public List<String> getColumnList(String table){
+	
+	return queryDao.getColumnList(table);
+	
+}
+public List<String> getTableList() {
+	return queryDao.getTableList();
+}
+public  List<String> getFK(List<String> tables) {
+	return queryDao.getFK(tables);
+}
 }

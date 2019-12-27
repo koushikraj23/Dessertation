@@ -14,4 +14,7 @@ public interface QueryDao {
 //	int setQuery(QueryDetails queryDetails);
 	int insert(QueryDetails queryDetails);
 	QueryPair getPredictData(String r_id);
+	List<String> getColumnList(String table);
+	List<String> getTableList(); 
+	List<String> getFK(List<String> table); 
 }

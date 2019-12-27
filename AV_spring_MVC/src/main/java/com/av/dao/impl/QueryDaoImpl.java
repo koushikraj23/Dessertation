@@ -2,6 +2,8 @@ package com.av.dao.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,6 +34,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 @Component
 public class QueryDaoImpl implements QueryDao {
@@ -55,7 +58,7 @@ public class QueryDaoImpl implements QueryDao {
 		
 		List<QueryDetails> queryDetails = (List<QueryDetails>) query
 				.setResultTransformer(Transformers.aliasToBean(QueryDetails.class)).list();
-		
+		tx.commit();
 		session.close();
 	
 	
@@ -102,8 +105,10 @@ public class QueryDaoImpl implements QueryDao {
 		.setResultTransformer(Transformers.aliasToBean(QueryData.class))
 .list();
 		
-
-		session.disconnect();
+		tx.commit();
+		session.close();
+//		session.close();
+//		session.disconnect();
 
 		
 		
@@ -114,13 +119,18 @@ public class QueryDaoImpl implements QueryDao {
 		return queryPair;
 	}
 	 SimpleJdbcInsert simpleJdbcInsert;
-	 
+	 Connection conn=null;
 	    @Autowired
-	    public void MessageRepositorySimpleJDBCInsert(DataSource dataSource) {
-	        simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+	    public void MessageRepositorySimpleJDBCInsert(DataSource dataSource) throws SQLException {
+	       
+	    	 conn=dataSource.getConnection();
+		        conn.setAutoCommit(true);
+	    	simpleJdbcInsert = new SimpleJdbcInsert(dataSource)
+	        		
 	          .withTableName("querytable").usingGeneratedKeyColumns("id");
+	       
 	    }
-	    
+	    @Transactional
 	    public int insert(QueryDetails queryDetails) {
 	        Map<String, Object> parameters = new HashMap<>(1);
 //	        parameters.put("id", queryDetails.getId());
@@ -129,10 +139,12 @@ public class QueryDaoImpl implements QueryDao {
 	        parameters.put("col_type", queryDetails.getCol_type());
 	        parameters.put("sql_query", queryDetails.getSql_query());
 	        parameters.put("title", queryDetails.getTitle());
-	  
+	      
+
 	        Number newId = simpleJdbcInsert.executeAndReturnKey(parameters);
 	        
 	        int a=((BigInteger) newId).intValue();
+	     
 	        System.out.println(a);
 	        return (int) a;
 	    }
@@ -168,8 +180,8 @@ public class QueryDaoImpl implements QueryDao {
 			
 			List<String> dates = Arrays.asList(predict.getP_dates().split("\\s*,\\s*"));
 			List<String> datas = null,datas2= null,datas3= null,datas4= null,datas5=null;
-			if(predict.getP_values()!="0") {
-			 datas = Arrays.asList(predict.getP_values().split("\\s*,\\s*"));
+			if(!predict.getP_values_1().equalsIgnoreCase("0")) {
+			 datas = Arrays.asList(predict.getP_values_1().split("\\s*,\\s*"));
 			
 			}
 			
@@ -184,30 +196,31 @@ public class QueryDaoImpl implements QueryDao {
 			
 			 if(!predict.getP_values_5().equalsIgnoreCase("0")) {
 				datas5 = Arrays.asList(predict.getP_values_5().split("\\s*,\\s*"));}
-		
+		System.out.println(predict.getP_values_4()+",,"+predict.getP_values_2());
 			for(int i=0;i<dates.size();i++) {
 				 QueryData q= new QueryData();
 				 q.setId(predict.getSql_id());
 				 q.setCol_1(dates.get(i));
-				 if(!predict.getP_values().equalsIgnoreCase("0")) {
+				 if(!(predict.getP_values_1().equalsIgnoreCase("0")||predict.getP_values_1().equalsIgnoreCase(""))) {
 				 q.setD2(Double.valueOf(datas.get(i)).longValue());
 				 }
-				 if(!predict.getP_values_2().equalsIgnoreCase("0")) {
+				 if(!(predict.getP_values_2().equalsIgnoreCase("0")||predict.getP_values_2().equalsIgnoreCase(""))) {
 					 
 					 q.setD3(Double.valueOf(datas2.get(i)).longValue());
 					 }
-				 if(!predict.getP_values_3().equalsIgnoreCase("0")) {
+				 if(!(predict.getP_values_3().equalsIgnoreCase("0")||predict.getP_values_3().equalsIgnoreCase(""))) {
 					 q.setD4(Double.valueOf(datas3.get(i)).longValue());
 					 }
-				 if(!predict.getP_values_4().equalsIgnoreCase("0")) {
+				 if(!(predict.getP_values_4().equalsIgnoreCase("0")||predict.getP_values_4().equalsIgnoreCase(""))) {
 					 q.setD5(Double.valueOf(datas4.get(i)).longValue());
 					 }
-				 if(!predict.getP_values_5().equalsIgnoreCase("0")) {
+				 if(!(predict.getP_values_5().equalsIgnoreCase("0")||predict.getP_values_5().equalsIgnoreCase(""))) {
 					 q.setD6(Double.valueOf(datas5.get(i)).longValue());
 					 }
 				 System.out.println(q);
 				 result.add(q);
 			}
+			tx.commit();
 			session.close();
 		
 		
@@ -248,6 +261,104 @@ public class QueryDaoImpl implements QueryDao {
 //
 //		return 0;
 //	}
+
+		public List<String> getTableList() {
+			
+			Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+			Transaction tx = session.beginTransaction();
+			@SuppressWarnings("rawtypes")
+
+			String queryString="SELECT table_name FROM information_schema.tables where table_schema='dessertation';";
+		
+			SQLQuery query = session.createSQLQuery(queryString);
+			
+			List<String> result = (List<String>) query.list();
+			tx.commit();
+			session.clear();
+			session.close();
+
+//			entityManagerFactory.close();
+			System.out.println(result);
+			return result;
+			
+		}
+		public List<String> getColumnList(String table) {
+			Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+			Transaction tx = session.beginTransaction();
+			@SuppressWarnings("rawtypes")
+
+			String queryString="select concat(COLUMN_NAME,'-',DATA_TYPE)\n" + 
+					"from INFORMATION_SCHEMA.COLUMNS\n" + 
+					"where TABLE_NAME="+table+" and table_schema='dessertation'";
+		
+			SQLQuery query = session.createSQLQuery(queryString);
+			
+			List<String> result = (List<String>) query.list();
+			for(String g:result)
+			System.out.println(g);
+			tx.commit();
+			session.clear();
+			session.close();
+			System.out.println(result);
+			return result;
+			
+		}
+		
+		
+		
+		public List<String> getFK(List<String> table) {
+			Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+			Transaction tx = session.beginTransaction();
+			String table1[] = {"prediction_model","querytable"};
+			List<String> result=new ArrayList();
+			for(int i=0;i<table.size();i++) {
+				String temp1=table.get(i);
+				
+				for(int j=0;j<table.size();j++) {
+				
+				if(j!=i) {
+					String temp2=table.get(j);
+					@SuppressWarnings("rawtypes")
+
+					String queryString="SELECT IF((select count(*)from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '" + temp1+"'and table_schema='dessertation' and REFERENCED_TABLE_NAME ='" + temp2+"')=1, \n" + 
+							"(select ifnull( concat (\"where \",REFERENCED_TABLE_NAME,\".\",REFERENCED_COLUMN_NAME,\" = \",COLUMN_NAME,\".\",TABLE_NAME ),0)from INFORMATION_SCHEMA.KEY_COLUMN_USAGE \n" + 
+							"where table_schema='dessertation' and TABLE_NAME = '" + temp1+"'and REFERENCED_TABLE_NAME ='"+ temp2+"'),\'0\');";
+							
+							SQLQuery	query = session.createSQLQuery(queryString);
+							
+						String resultTemp = (String) query.uniqueResult();
+						
+						if(resultTemp.indexOf("where")>=0) {
+							result.add(resultTemp);
+							System.out.println(resultTemp);
+							if(result.size()==table.size()-1) {
+								return result;								
+							}
+						}
+						
+					
+						
+						
+						
+						
+						System.out.println(resultTemp);
+								
+				}
+				}
+				
+			}
+			
+			
+			
+			tx.commit();
+			
+			session.clear();
+			session.close();
+			return result;
+		
+//			return result;
+			
+		}
 
 
 }

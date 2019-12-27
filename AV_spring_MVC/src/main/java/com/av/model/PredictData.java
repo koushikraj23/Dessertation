@@ -22,10 +22,10 @@ public class PredictData {
 		this.id = id;
 	}
 	
-	public String getP_values() {
+	public String getP_values_1() {
 		return p_values_1;
 	}
-	public void setP_values(String p_values_1) {
+	public void setP_values_1(String p_values_1) {
 		this.p_values_1 = p_values_1;
 	}
 	
