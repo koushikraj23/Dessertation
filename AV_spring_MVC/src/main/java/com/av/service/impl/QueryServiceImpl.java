@@ -50,4 +50,14 @@ public List<String> getTableList() {
 public  List<String> getFK(List<String> tables) {
 	return queryDao.getFK(tables);
 }
+@Override
+public QueryDetails getQueryDetails(int r_id) {
+	// TODO Auto-generated method stub
+	return queryDao.getQueryDetails( r_id);
+}
+@Override
+public List<Integer> getPredictionList() {
+	// TODO Auto-generated method stub
+	return queryDao.getPredictionList();
+}
 }

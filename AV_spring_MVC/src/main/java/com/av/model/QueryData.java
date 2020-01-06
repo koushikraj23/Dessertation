@@ -30,70 +30,96 @@ public class QueryData {
 	private int i11;
 	
 	
-	private float d1;
-	private float d2;
-	private float d3;
-	private float d4;
-	private float d5;
-	private float d6;
-	private float d7;
-	private float d8;
-	private float d9;
+	private double d1;
+	private double d2;
+	private double d3;
+	private double d4;
+	private double d5;
+	private double d6;
+	private double d7;
+	private double d8;
+	private double d9;
+	private double d10;
+	private double d11;
+	
+	public double getD10() {
+		return d10;
+	}
+	public void setD10(double d10) {
+		this.d10 = d10;
+	}
+	public double getD11() {
+		return d11;
+	}
+	public void setD11(double d11) {
+		this.d11 = d11;
+	}
+	private String Col_1;
+	private String Col_2;
+	private String Col_3;
+	private String Col_4;
+	private String Col_5;
+	private String Col_6;
+	private String Col_7;
+	private String Col_8;
+	private String Col_9;
+	private String Col_10;
+	private String Col_11;
+	private String Col_12;
 	
 	
-	
-	public float getD1() {
+	public double getD1() {
 		return d1;
 	}
-	public void setD1(float d1) {
+	public void setD1(double d1) {
 		this.d1 = d1;
 	}
-	public float getD2() {
+	public double getD2() {
 		return d2;
 	}
-	public void setD2(float d2) {
+	public void setD2(double d2) {
 		this.d2 = d2;
 	}
-	public float getD3() {
+	public double getD3() {
 		return d3;
 	}
-	public void setD3(float d3) {
+	public void setD3(double d3) {
 		this.d3 = d3;
 	}
-	public float getD4() {
+	public double getD4() {
 		return d4;
 	}
-	public void setD4(float d4) {
+	public void setD4(double d4) {
 		this.d4 = d4;
 	}
-	public float getD5() {
+	public double getD5() {
 		return d5;
 	}
-	public void setD5(float d5) {
+	public void setD5(double d5) {
 		this.d5 = d5;
 	}
-	public float getD6() {
+	public double getD6() {
 		return d6;
 	}
-	public void setD6(float d6) {
+	public void setD6(double d6) {
 		this.d6 = d6;
 	}
-	public float getD7() {
+	public double getD7() {
 		return d7;
 	}
-	public void setD7(float d7) {
+	public void setD7(double d7) {
 		this.d7 = d7;
 	}
-	public float getD8() {
+	public double getD8() {
 		return d8;
 	}
-	public void setD8(float d8) {
+	public void setD8(double d8) {
 		this.d8 = d8;
 	}
-	public float getD9() {
+	public double getD9() {
 		return d9;
 	}
-	public void setD9(float d9) {
+	public void setD9(double d9) {
 		this.d9 = d9;
 	}
 	public int getId() {
@@ -192,18 +218,7 @@ public class QueryData {
 	public void setI11(int i11) {
 		this.i11 = i11;
 	}
-	private String Col_1;
-	private String Col_2;
-	private String Col_3;
-	private String Col_4;
-	private String Col_5;
-	private String Col_6;
-	private String Col_7;
-	private String Col_8;
-	private String Col_9;
-	private String Col_10;
-	private String Col_11;
-	private String Col_12;
+
 	public String getCol_1() {
 		return Col_1;
 	}

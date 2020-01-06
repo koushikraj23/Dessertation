@@ -39,7 +39,11 @@
           	<%} if(col_size>3){%>,<%if(dataList.get(i).getCol_4()!=null){%> <%=dataList.get(i).getCol_4()%> <%} else if(dataList.get(i).getD4()!=0){%> <%=dataList.get(i).getD4()%><%} else{%> <%=dataList.get(i).getI4()%><% }%>	
           	<%} if(col_size>4){%>,<%if(dataList.get(i).getCol_5()!=null){%> <%=dataList.get(i).getCol_5()%> <%} else if(dataList.get(i).getD5()!=0){%> <%=dataList.get(i).getD5()%><%} else{%> <%=dataList.get(i).getI5()%><% }%>	
           	<%} if(col_size>5){%>,<%if(dataList.get(i).getCol_6()!=null){%> <%=dataList.get(i).getCol_6()%> <%} else if(dataList.get(i).getD6()!=0){%> <%=dataList.get(i).getD6()%><%} else{%> <%=dataList.get(i).getI6()%><% }%>	
-          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_7()!=null){%> <%=dataList.get(i).getCol_7()%> <%} else if(dataList.get(i).getD7()!=0){%> <%=dataList.get(i).getD7()%><%} else{%> <%=dataList.get(i).getI7()%><% }%>	
+          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_7()!=null){%> <%=dataList.get(i).getCol_7()%> <%} else if(dataList.get(i).getD7()!=0){%> <%=dataList.get(i).getD7()%><%} else{%> <%=dataList.get(i).getI7()%><% }%>
+          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_8()!=null){%> <%=dataList.get(i).getCol_8()%> <%} else if(dataList.get(i).getD8()!=0){%> <%=dataList.get(i).getD8()%><%} else{%> <%=dataList.get(i).getI8()%><% }%>
+          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_9()!=null){%> <%=dataList.get(i).getCol_9()%> <%} else if(dataList.get(i).getD9()!=0){%> <%=dataList.get(i).getD9()%><%} else{%> <%=dataList.get(i).getI9()%><% }%>
+          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_10()!=null){%> <%=dataList.get(i).getCol_10()%> <%} else if(dataList.get(i).getD10()!=0){%> <%=dataList.get(i).getD10()%><%} else{%> <%=dataList.get(i).getI10()%><% }%>
+          	<%} if(col_size>6){%>,<%if(dataList.get(i).getCol_11()!=null){%> <%=dataList.get(i).getCol_11()%> <%} else if(dataList.get(i).getD11()!=0){%> <%=dataList.get(i).getD11()%><%} else{%> <%=dataList.get(i).getI11()%><% }%>
             <%}%>
             ]
             

@@ -24,7 +24,18 @@ public class QueryDetails {
 	private int col_no;
 	@Column
 	private String col_name;
+	@Column
 	private String col_type;
+	@Column
+	private int prediction;
+	
+	public int getPrediction() {
+		return prediction;
+	}
+	public void setPrediction(int prediction) {
+		this.prediction = prediction;
+	}
+	
 	public int getId() {
 		return id;
 	}

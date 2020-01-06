@@ -17,5 +17,7 @@ public interface QueryService {
 	QueryPair  getPredictData(String r_id);
 	List<String> getColumnList(String table);
 	List<String> getTableList();
-	List<String> getFK(List<String> table); 
+	List<Integer> getPredictionList();
+	List<String> getFK(List<String> table);
+	QueryDetails getQueryDetails(int r_id); 
 }

@@ -1,6 +1,7 @@
 package com.av;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -9,9 +10,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.security.auth.message.callback.PrivateKeyCallback.Request;
@@ -21,6 +26,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,18 +41,62 @@ import com.av.model.QueryPair;
 import com.av.model.QueryData;
 import com.av.service.QueryService;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONString;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Controller
 
 public class Tcontroller {
+	
+	
+	
+	@Component
+	public class FixedRateScheduledTask {
+
+	    private  final Logger LOG = LoggerFactory.getLogger(FixedRateScheduledTask.class);
+
+	    @Scheduled(fixedDelay = 2000)
+	    public void fixedDelayExample() throws IOException, InterruptedException {
+	    	
+	    	List<Integer> result = queryService.getPredictionList();
+	    	
+	    	for(Integer i:result)
+	    	{
+	    	
+	    		String command = "C:\\\\Users\\\\91984\\\\Anaconda3\\\\python.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstm.py "+i;
+        		Process p = Runtime.getRuntime().exec(command  );
+        		p.waitFor();
+        		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        		StringBuilder buffer = new StringBuilder();     
+        		String line = null;
+        		while ((line = reader.readLine()) != null){           
+        		    buffer.append(line);
+        		}
+        		int exitCode = p.waitFor();
+        		System.out.println("Value is: "+buffer.toString());                
+        		System.out.println("Process exit value:"+exitCode);        
+        		reader.close();
+	    		command = "C:\\\\Users\\\\91984\\\\Anaconda3\\\\pythonw.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstmPrediction.py "+i;
+        		p = Runtime.getRuntime().exec(command  );
+	    		
+	    	}
+	        
+	        try {
+	            TimeUnit.MINUTES.sleep(1);
+	        } catch (InterruptedException ie) {
+	            LOG.error("Got Interrupted {}", ie);
+	        }
+	    }
+	}
+
 	@Autowired
 	private QueryService queryService;
 	@GetMapping({ "/graph" })
-//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	ResponseEntity<List<data>> 
+
 	public String QueryDetails( Model model, @RequestParam(value = "type", required = false, defaultValue = "0") String type,@RequestParam(value = "r_id", required = false, defaultValue = "1") String r_id) {
         
 		List<QueryDetails> queryList = queryService.getQueryList();
@@ -71,6 +121,10 @@ public class Tcontroller {
 			return "pie";
 		case "8":
 			return "donut";
+		case "9":
+			return "steppedAreaChart";
+		case "10":
+			return "line";
 		default:
 			return "table";
 
@@ -106,6 +160,10 @@ public class Tcontroller {
 			return "pie";
 		case "8":
 			return "donut";
+		case "9":
+			return "steppedAreaChart";
+		case "10":
+			return "line";
 		default:
 			return "table";
 
@@ -113,7 +171,12 @@ public class Tcontroller {
 
 	}
 	
-
+	@GetMapping("/update")
+    public String updateQuery(Model model,@RequestParam(value = "r_id", required = false, defaultValue = "1") int r_id) {
+       QueryDetails   query=queryService.getQueryDetails(r_id);
+       model.addAttribute("data",query);
+        return "updateQuery";
+    }
 	   @GetMapping("/graphs")
 	    public String graphPage(Model model, @RequestParam(value = "type", required = false, defaultValue = "0") String type,@RequestParam(value = "r_id", required = false, defaultValue = "1") String r_id) {
 	       model.addAttribute("id",r_id);
@@ -132,11 +195,11 @@ public class Tcontroller {
 			model.addAttribute("table", result);
 	        return "index";
 	    }
-	   @GetMapping("/addquery")
+	   @GetMapping("/addQuery")
 	    public String addquery(Model model) {
 			List<String> result = queryService.getTableList();
 			model.addAttribute("table", result);
-	        return "addquery";
+	        return "addQuery";
 	    }
 	      
 	 @PostMapping("/saveDetails")
@@ -155,26 +218,7 @@ public class Tcontroller {
 			
 	    return "allQueryList";
 	  }
-	 
-	@GetMapping({ "/1", "/hi" })
-	public String hello(Model model, @RequestParam(value = "type", required = false, defaultValue = "0") String type) {
-		model.addAttribute("type", type);
-		switch (type) {
-		case "1":
-			return "bar";
-		case "2":
-			return "areaChart";
-		case "3":
-			return "bubble";
-		case "4":
-			return "scatter";
-		default:
-			return "hello";
 
-		}
-
-	}
-	
 	
 	
 	
@@ -227,33 +271,3 @@ public class Tcontroller {
 	
 	
 }
-//package com.controller;
-
-//import java.util.List;
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
-//
-//import com.av.model.UserDetails;
-//import com.av.model.data;
-//import com.av.service.UserService;
-
-//@Controller
-//public class Tcontroller {
-//	
-//	@Autowired
-//	private UserService userService;
-//	@GetMapping({ "/", "/hello" })
-////	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	public ResponseEntity<List<data>> userDetails() {
-//        
-//		List<data> data = userService.getUserDetails();
-//		return new ResponseEntity<List<data>>(data, HttpStatus.OK);
-//	}
-//
-//}

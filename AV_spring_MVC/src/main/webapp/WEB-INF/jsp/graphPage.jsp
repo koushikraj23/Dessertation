@@ -41,10 +41,10 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon ">
+          <i class="fas fa-chart-line"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">VISCRAFT <sup>V1</sup></div>
       </a>
 
       <!-- Divider -->
@@ -116,7 +116,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+      <%--   <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -295,15 +295,19 @@
 
           </ul>
 
-        </nav>
+        </nav> --%>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
+         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+          <h1> </h1>
+          <h1 class="h3 mb-4 text-gray-800">Koushikraj</h1></nav>
+        
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
+          
+         
      
 <iframe style="height:550px;"width="100%" src="/graph?r_id=<%=id%>&type=<%=type %>"></iframe>
         </div>

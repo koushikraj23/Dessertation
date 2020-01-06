@@ -90,7 +90,7 @@
 
         var table = new google.visualization.Table(document.getElementById('table_div'));
 
-        table.draw(data, {showRowNumber: true, width: '100%', height: '100%',page:'enable'});
+        table.draw(data, {showRowNumber: true, width: '100%', height: '95%',page:'enable'});
       }
     </script>
   </head>

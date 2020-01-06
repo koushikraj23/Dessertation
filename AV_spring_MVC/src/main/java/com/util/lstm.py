@@ -16,18 +16,21 @@ from pandas.plotting import register_matplotlib_converters
 from sklearn import neighbors
 from sklearn.model_selection import GridSearchCV
 from sklearn.preprocessing import MinMaxScaler
+
 register_matplotlib_converters()
 import mysql.connector
 from mysql.connector import Error
 import pandas as pd
 
 connection = mysql.connector.connect(host='localhost',
-                                    database='sys',
+                                    database='dessertation',
                                     user='root',
                                     password='123456',
                                     auth_plugin='mysql_native_password')
+# print ('Argument List:', str(sys.argv[1]))
 
-id = sys.argvs;
+id = int(sys.argv[1])
+# id=1
 sql_select_Query = "SELECT sql_query FROM querytable where id=%s;"
 cursor = connection.cursor(buffered=True)
 cursor.execute(sql_select_Query, (id,))
@@ -35,7 +38,7 @@ record = cursor.fetchone()
 for row in record:
     sql_select_Query = row
     print(row)
-print(sql_select_Query)
+# print(sql_select_Query)
 # sql_select_Query="SELECT concat( year,Month) as Date , unit_price  as data FROM oildata"
 df = pd.read_sql(sql_select_Query, connection);
  

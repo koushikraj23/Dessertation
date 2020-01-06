@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Tables</title>
+  <title>Viscraft - Tables</title>
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -40,10 +40,10 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon ">
+          <i class="fas fa-chart-line"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">VISCRAFT <sup>v1</sup></div>
       </a>
 
       <!-- Divider -->
@@ -67,7 +67,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="addQuery">
+        <a class="nav-link" href="addquery">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Add Query</span></a>
       </li>
@@ -96,7 +96,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+<%--         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -275,20 +275,18 @@
 
           </ul>
 
-        </nav>
+        </nav> --%>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-          <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
-
-          <!-- DataTales Example -->
+          <h1 class="h3 mb-2 text-gray-800">Koushikraj</h1>
+           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Lists of Visualizations</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -301,6 +299,7 @@
         <th>Column Name</th>
         <th>Column No</th>
         <th>graphs</th>
+         <th>Forecasting</th>
       </tr>
                   </thead>
                   <tfoot>
@@ -328,7 +327,9 @@
          <td><%=q.getSql_query() %></td>
            <td><%=q.getCol_name() %></td>
              <td><%=q.getCol_no() %></td>
-             <td><a href="/graphs?r_id=<%=q.getId() %>&type=1"> Bar</a>,
+             <td>
+             <a href="/graphs?r_id=<%=q.getId() %>&type=0"> Table</a>,
+             <a href="/graphs?r_id=<%=q.getId() %>&type=1"> Bar</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=2"> AreaChart</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=3"> Bubble</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=4"> Scatter</a>,
@@ -337,7 +338,9 @@
              <a href="/graphs?r_id=<%=q.getId() %>&type=7"> Pie</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=8"> Donut</a>
              </td> 
-              <td><a href="/predicts?r_id=<%=q.getId() %>&type=1"> Bar</a>,
+              <td>
+             <a href="/graphs?r_id=<%=q.getId() %>&type=0"> Table</a>,
+             <a href="/predicts?r_id=<%=q.getId() %>&type=1"> Bar</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=2"> AreaChart</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=3"> Bubble</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=4"> Scatter</a>,

@@ -72,6 +72,38 @@ public class QueryDaoImpl implements QueryDao {
 		return queryDetails;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	@SuppressWarnings("deprecation")
+	public QueryDetails getQueryDetails(int r_id) {
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+
+		Transaction tx = session.beginTransaction();
+		@SuppressWarnings("rawtypes")
+		
+		
+
+		String queryString="SELECT id ,title,sql_query, col_no,col_name,col_type,prediction FROM querytable where id="+r_id+";";
+		
+
+	
+		SQLQuery query = session.createSQLQuery(queryString);
+		
+		QueryDetails queryDetails = (QueryDetails) query
+				.setResultTransformer(Transformers.aliasToBean(QueryDetails.class)).uniqueResult();
+		tx.commit();
+		session.close();
+	
+		return queryDetails;
+	}
+	
+	
+	
 	@SuppressWarnings("deprecation")
 	public QueryPair getQueryData(String r_id) {
 		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
@@ -139,6 +171,7 @@ public class QueryDaoImpl implements QueryDao {
 	        parameters.put("col_type", queryDetails.getCol_type());
 	        parameters.put("sql_query", queryDetails.getSql_query());
 	        parameters.put("title", queryDetails.getTitle());
+	        parameters.put("prediction", queryDetails.getPrediction());
 	      
 
 	        Number newId = simpleJdbcInsert.executeAndReturnKey(parameters);
@@ -157,7 +190,7 @@ public class QueryDaoImpl implements QueryDao {
 			@SuppressWarnings("rawtypes")
 			
 			
-			String queryString="SELECT id ,sql_id,p_dates, p_values_1,IFNULL(p_values_2,0) as p_values_2,IFNULL(p_values_3,0) as p_values_3,IFNULL(p_values_4,0) as p_values_4,IFNULL(p_values_5,0) as p_values_5 FROM prediction where id="+r_id+";";
+			String queryString="SELECT id ,sql_id,p_dates, p_values_1,IFNULL(p_values_2,0) as p_values_2,IFNULL(p_values_3,0) as p_values_3,IFNULL(p_values_4,0) as p_values_4,IFNULL(p_values_5,0) as p_values_5 FROM prediction where sql_id="+r_id+";";
 			
 
 		
@@ -197,6 +230,7 @@ public class QueryDaoImpl implements QueryDao {
 			 if(!predict.getP_values_5().equalsIgnoreCase("0")) {
 				datas5 = Arrays.asList(predict.getP_values_5().split("\\s*,\\s*"));}
 		System.out.println(predict.getP_values_4()+",,"+predict.getP_values_2());
+		
 			for(int i=0;i<dates.size();i++) {
 				 QueryData q= new QueryData();
 				 q.setId(predict.getSql_id());
@@ -358,6 +392,34 @@ public class QueryDaoImpl implements QueryDao {
 		
 //			return result;
 			
+		}
+
+
+
+
+
+
+
+
+		@Override
+		public List<Integer> getPredictionList() {
+			Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+			Transaction tx = session.beginTransaction();
+			@SuppressWarnings("rawtypes")
+
+			String queryString="SELECT id FROM querytable where prediction=1;";
+		
+			SQLQuery query = session.createSQLQuery(queryString);
+			
+			List<Integer> result = (List<Integer>) query.list();
+			tx.commit();
+			session.clear();
+			session.close();
+			for (int i = 0; i < result.size(); i++) {
+				System.out.println(result.get(i));
+			}
+			System.out.println(result);
+			return result;
 		}
 
 

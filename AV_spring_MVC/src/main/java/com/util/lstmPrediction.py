@@ -24,7 +24,7 @@ from mysql.connector import Error
 import pandas as pd
 
 connection = mysql.connector.connect(host='localhost',
-                                         database='sys',
+                                         database='dessertation',
                                          user='root',
                                          password='123456' ,auth_plugin='mysql_native_password')
 
@@ -34,8 +34,8 @@ from pmdarima.arima import auto_arima
 from sklearn.preprocessing import MinMaxScaler
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, LSTM
-
-id=1
+import sys
+id = int(sys.argv[1])
 # sql_select_Query = "SELECT concat(year ,Month) as Date,price as data FROM oildata;"
 # sql_select_Query="SELECT concat( year,Month) as Date , unit_price  as data FROM oildata"
 sql_select_Query = "SELECT sql_query FROM querytable where id=%s;"
@@ -47,7 +47,14 @@ for row in record:
     print(row)
 print(sql_select_Query)
 
-
+# id=1
+sql_select_Query = "SELECT sql_query FROM querytable where id=%s;"
+cursor = connection.cursor(buffered=True)
+cursor.execute(sql_select_Query, (id,))
+record = cursor.fetchone()
+for row in record:
+    sql_select_Query = row
+    print(row)
 df1  = pd.read_sql(sql_select_Query,connection);
 
  
@@ -58,7 +65,7 @@ print(listOfColumnNames)
 print(len(listOfColumnNames))
 for y in range(1, len(listOfColumnNames)):
     df=df1.iloc[:,[0,y]]
-    df[listOfColumnNames[0]] = pd.to_datetime(df1.iloc[:, 0], format='%Y%m')   
+    df[listOfColumnNames[0]] = pd.to_datetime(df1.iloc[:, 0], format='%Y-%m')   
     print( df1[listOfColumnNames[y]][:2])
 #     df['Date'] = pd.to_datetime(df['Date'])
     df.set_index(listOfColumnNames[0], inplace=True)
@@ -92,19 +99,23 @@ for y in range(1, len(listOfColumnNames)):
 # last_date.set_index('Date',inplace=True)
 # print(last_date)
 # print( last_date.index)
-    sql_select_Query="SELECT * FROM sys.prediction_model where sql_id=1;"
-    sql_select_Query="SELECT col_no FROM sys.querytable where id=1;"
+
+#     sql_select_Query="SELECT col_no FROM sys.querytable where id="+str(id)+";"
+    
+    sql_select_Query = "SELECT col_no FROM querytable where id=%s;"
+
     cursor = connection.cursor(buffered=True)
-    cursor.execute(sql_select_Query)
+    cursor.execute(sql_select_Query,(id,))
     col_no = cursor.fetchone()
     for row in col_no:
         col_no = row
 # 
 # 
 # for y in range(1, col_no+1):
-    sql_select_Query="SELECT p_value_"+str(y)+" FROM sys.prediction_model where sql_id=1;"
-    cursor.execute(sql_select_Query)
-    
+    sql_select_Query="SELECT p_value_"+str(y)+" FROM prediction_model where sql_id=%s;"
+   
+    cursor.execute(sql_select_Query,(id,))
+    print(sql_select_Query)
     filename = cursor.fetchone()
     for row in filename:
         filename = row
@@ -137,7 +148,7 @@ for y in range(1, len(listOfColumnNames)):
     df_predict = pd.DataFrame(scaler.inverse_transform(pred_list),
                           index=future_dates[-n_input:].index, columns=['Prediction'])
 
-    df_proj = pd.concat([df,df_predict], axis=1)
+#     df_proj = pd.concat([df,df_predict], axis=1)
     print(df_predict)
     x = df_predict.to_string(header=False,
                   index=False,
@@ -152,7 +163,7 @@ for y in range(1, len(listOfColumnNames)):
     vals = [','.join(ele.split()) for ele in x]
     vals1=",".join(map(str,vals))
 
-    mySql_insert_query = "INSERT INTO prediction (sql_id, p_values_1, p_dates) VALUES (1, '"+vals1+"','"+dates1+"') on duplicate key update p_values_"+str(y)+"='"+vals1+"';"
+    mySql_insert_query = "INSERT INTO prediction (sql_id, p_values_1, p_dates) VALUES ("+str(id)+", '"+vals1+"','"+dates1+"') on duplicate key update p_values_"+str(y)+"='"+vals1+"';"
 
     print(mySql_insert_query)
     cursor = connection.cursor()
@@ -163,16 +174,17 @@ for y in range(1, len(listOfColumnNames)):
         print('last insert id not found')
  
     connection.commit()
+ 
 # print(df_predict)
-    print(df_proj)
-    plt.figure(figsize=(20, 5))
-    plt.plot(df_proj.index, df_proj[listOfColumnNames[y]])
-    plt.plot(df_proj.index, df_proj['Prediction'], color='r')
-    plt.legend(loc='best', fontsize='xx-large')
-    plt.xticks(fontsize=18)
-    plt.yticks(fontsize=16)
-    plt.show()
-#  
+#     print(df_proj)
+#     plt.figure(figsize=(20, 5))
+#     plt.plot(df_proj.index, df_proj[listOfColumnNames[y]])
+#     plt.plot(df_proj.index, df_proj['Prediction'], color='r')
+#     plt.legend(loc='best', fontsize='xx-large')
+#     plt.xticks(fontsize=18)
+#     plt.yticks(fontsize=16)
+#     plt.show()
+# #  
 # scaler = MinMaxScaler(feature_range=(0, 1))
 # train = scaler.fit_transform(dataset)
 # scaler.fit(train)
