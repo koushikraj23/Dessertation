@@ -59,17 +59,50 @@ public class Tcontroller {
 
 	    private  final Logger LOG = LoggerFactory.getLogger(FixedRateScheduledTask.class);
 
-	    @Scheduled(fixedDelay = 2000)
+	    @Scheduled(fixedDelay = 50000)
 	    public void fixedDelayExample() throws IOException, InterruptedException {
 	    	
 	    	List<Integer> result = queryService.getPredictionList();
-	    	
-	    	for(Integer i:result)
+	    	for(Integer i:result) {
+String command = "C:\\Users\\91984\\Anaconda3\\pythonw.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstm.py "+i;
+Process p = Runtime.getRuntime().exec(command  );
+
+BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+StringBuilder buffer = new StringBuilder();     
+String line = null;
+while ((line = reader.readLine()) != null){           
+    buffer.append(line);
+}
+int exitCode = p.waitFor();
+System.out.println("Value is: "+buffer.toString());                
+System.out.println("Process exit value:"+exitCode);        
+reader.close();
+
+System.out.println("model finished");   
+ command = "C:\\Users\\91984\\Anaconda3\\pythonw.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstmPrediction.py "+i;
+ p = Runtime.getRuntime().exec(command  );
+
+ reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+ buffer = new StringBuilder();     
+ line = null;
+while ((line = reader.readLine()) != null){           
+    buffer.append(line);
+}
+ exitCode = p.waitFor();
+System.out.println("Value is: "+buffer.toString());                
+System.out.println("Process exit value:"+exitCode);        
+reader.close();
+}
+	    	/*for(Integer i:result)
 	    	{
-	    	
-	    		String command = "C:\\\\Users\\\\91984\\\\Anaconda3\\\\python.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstm.py "+i;
+	    		System.out.println("starting");  
+	    		String command = "C:\\Users\\91984\\Anaconda3\\pythonw.exe F:\\Dessertation\\Time_series\\fits\\lstm.py 1";
+//	    		String command = "C:\\\\Users\\\\91984\\\\Anaconda3\\\\pythonw.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstm.py "+i;
+	    		
         		Process p = Runtime.getRuntime().exec(command  );
+        		System.out.println("starting2"); 
         		p.waitFor();
+        		System.out.println("starting2"); 
         		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
         		StringBuilder buffer = new StringBuilder();     
         		String line = null;
@@ -83,7 +116,7 @@ public class Tcontroller {
 	    		command = "C:\\\\Users\\\\91984\\\\Anaconda3\\\\pythonw.exe C:\\Users\\91984\\git\\dessertation\\AV_spring_MVC\\src\\main\\java\\com\\util\\lstmPrediction.py "+i;
         		p = Runtime.getRuntime().exec(command  );
 	    		
-	    	}
+	    	}*/
 	        
 	        try {
 	            TimeUnit.MINUTES.sleep(1);

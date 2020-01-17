@@ -50,7 +50,7 @@ public class QueryDaoImpl implements QueryDao {
 		@SuppressWarnings("rawtypes")
 		
 		
-		String queryString="SELECT id ,title,sql_query, col_no,col_name,col_type FROM querytable ;";
+		String queryString="SELECT id ,title,sql_query, col_no,col_name,col_type,prediction FROM querytable ;";
 		
 
 	
@@ -72,13 +72,7 @@ public class QueryDaoImpl implements QueryDao {
 		return queryDetails;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+
 	@SuppressWarnings("deprecation")
 	public QueryDetails getQueryDetails(int r_id) {
 		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
@@ -355,7 +349,7 @@ public class QueryDaoImpl implements QueryDao {
 					@SuppressWarnings("rawtypes")
 
 					String queryString="SELECT IF((select count(*)from INFORMATION_SCHEMA.KEY_COLUMN_USAGE where TABLE_NAME = '" + temp1+"'and table_schema='dessertation' and REFERENCED_TABLE_NAME ='" + temp2+"')=1, \n" + 
-							"(select ifnull( concat (\"where \",REFERENCED_TABLE_NAME,\".\",REFERENCED_COLUMN_NAME,\" = \",COLUMN_NAME,\".\",TABLE_NAME ),0)from INFORMATION_SCHEMA.KEY_COLUMN_USAGE \n" + 
+							"(select ifnull( concat (\"where \",REFERENCED_TABLE_NAME,\".\",REFERENCED_COLUMN_NAME,\" = \",TABLE_NAME,\".\",COLUMN_NAME ),0)from INFORMATION_SCHEMA.KEY_COLUMN_USAGE \n" + 
 							"where table_schema='dessertation' and TABLE_NAME = '" + temp1+"'and REFERENCED_TABLE_NAME ='"+ temp2+"'),\'0\');";
 							
 							SQLQuery	query = session.createSQLQuery(queryString);

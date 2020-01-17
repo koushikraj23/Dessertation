@@ -78,9 +78,6 @@ for y in range(1, len(listOfColumnNames)):
 # data = df.sort_index(ascending=True, axis=0)
 
 
-    mySql_insert_query = "INSERT INTO prediction (sql_id, p_value, p_date) VALUES (10, 'Lenovo ThinkPad P71', 6459, '2019-08-14') "
-
-
  
     scaler = MinMaxScaler(feature_range=(0, 1))
     scaled_data = scaler.fit_transform(data)

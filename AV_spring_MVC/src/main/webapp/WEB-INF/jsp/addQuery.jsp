@@ -61,13 +61,21 @@ $(document).ready(function () {
 		mytable.push(slected_tables); */
 		 query= list+" from "+slected_tables.toString();
 		if(no_of_joins>0){
+			if(where!= null){
 			
-			query=query+" "+join;
+				 query=query+" "+join;
+				 query=query+" and "+where;
+			} else
+			{
+				 query=query+" "+join;
+			}
+			
 		}
-		if(where!= null){
-			 query=query+" "+where;
+		else if(where!= null){
+			 query=query+" where "+where;
 		}
 		
+	
 		$("#sql_query").val(query);
 		 console.log(query);
 		/* if(no_of_tables>1){
@@ -111,7 +119,7 @@ $(document).ready(function () {
 		/*  myObj[table].push(", "+table+"."+field+" as "+type+no_of_fields )
 		mytable.push(slected_tables); */
 		
-		$("#col_no").val(no_of_fields);
+		$("#col_no").val(no_of_fields-1);
 		$("#col_type").val(col_type.toString());
 		if(no_of_tables>1){
 		 $.ajax({
@@ -126,6 +134,7 @@ $(document).ready(function () {
 		          
 		            join=data;
 		            no_of_joins=join.length;
+		            
 		            console.log("SUCCESS : ", join);
 		        },
 		        error: function (e) {
@@ -432,12 +441,39 @@ function where_clause(value){
 }
 
 
-function join_clause(value) {
+function joinCheck() {
+	
+	var title = document.getElementById("title").value;
+	var col = document.getElementById("col_name").value;
+	var fields = document.getElementById("fields").value;
+	var colARR = col.split(',');
+	
+	
+	if (title.length<4) {
+		alert("Please fill in the title");
+		return false;
+	}else if (colARR.length!=(no_of_fields-1)) {
+		console.log(colARR);
+		alert("Mismatch in number of column and column names");
+		return false;
+	}else if(no_of_joins!=(no_of_tables-1)){
+		
+		alert("No join found ,please use the developer console to submit");
+		return false;	
+	}	
+	else{
+		document.forms['myform'].submit();
+		
+	
+	}
 
+		
 
 }
 
-
+function override(){
+	document.forms['myform'].submit();
+}
 function joinTable(value) {
 
 	$('#where_table1')
@@ -556,7 +592,7 @@ function column_list(id,value){
 			<div id="content">
 
 				<!-- Topbar -->
-				<nav
+<%-- 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
 					<!-- Sidebar Toggle (Topbar) -->
@@ -696,7 +732,7 @@ function column_list(id,value){
 
 					</ul>
 
-				</nav>
+				</nav> --%>
 				<!-- End of Topbar -->
 
 				<!-- Begin Page Content -->
@@ -706,7 +742,7 @@ function column_list(id,value){
 					<!-- Page Heading -->
 					<h1 class="h3 mb-4 text-gray-800">Add Query</h1>
 
-					<form method="post" action="saveDetails">
+					<form method="post" id="myform" onsubmit="event.preventDefault(); joinCheck();" action="saveDetails">
 						<!-- 	<div class="form-group">
 							<label for="email">Title:</label> <input type="text"
 								class="form-control" id="title" placeholder="Enter Title"
@@ -820,7 +856,7 @@ function column_list(id,value){
 							data-target="#devModal"> <i
 							class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Developer Module
-						</a> <button class="btn btn-success"  type="submit" value="Submit">Submit</button>
+						</a> <button class="btn btn-success"  type="submit"  value="Submit">Submit</button>
 
 						<!-- Developer Modal-->
 						<div class="modal fade" id="devModal" tabindex="-1" role="dialog"
@@ -876,7 +912,7 @@ function column_list(id,value){
 									<div class="modal-footer">
 										<button class="btn btn-secondary" type="button"
 											data-dismiss="modal">Cancel</button>
-											<button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+											<button type="submit" class="btn btn-primary" onclick="override();"  value="Submit">Submit</button>
 										
 									</div>
 								</div>

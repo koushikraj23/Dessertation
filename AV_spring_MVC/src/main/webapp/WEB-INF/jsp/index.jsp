@@ -425,7 +425,7 @@
               </div>
 
               <!-- Color System -->
-              <div class="row">
+            <!--   <div class="row">
                 <div class="col-lg-6 mb-4">
                   <div class="card bg-primary text-white shadow">
                     <div class="card-body">
@@ -475,7 +475,7 @@
                   </div>
                 </div>
               </div>
-
+ -->
             </div>
 
             <div class="col-lg-6 mb-4">
@@ -483,7 +483,8 @@
               <!-- Illustrations -->
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Illustrations</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">year wise barrel count
+</h6>
                 </div>
                 <div class="card-body">
                    <div class="chart-area" style=" height: 33rem;">
@@ -494,16 +495,7 @@
               </div>
 
               <!-- Approach -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                </div>
-               <div class="chart-area" style=" height: 33rem;">
-                 <iframe id="frame" style="height: -webkit-fill-available; -webkit-transform: scale(1.0);
-    -webkit-transform-origin: 0 0;"width="100%"  frameBorder="0" src="/graph?r_id=25&type=7"></iframe>
-                  </div>
-              </div>
-
+         
             </div>
           </div>
 

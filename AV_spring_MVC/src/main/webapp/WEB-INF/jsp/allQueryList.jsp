@@ -67,7 +67,7 @@
 
       <!-- Nav Item - Charts -->
       <li class="nav-item">
-        <a class="nav-link" href="addquery">
+        <a class="nav-link" href="addQuery">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Add Query</span></a>
       </li>
@@ -337,7 +337,10 @@
              <a href="/graphs?r_id=<%=q.getId() %>&type=6"> Column</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=7"> Pie</a>,
              <a href="/graphs?r_id=<%=q.getId() %>&type=8"> Donut</a>
+             <a href="/graphs?r_id=<%=q.getId() %>&type=9"> Stepped Area</a>
+             <a href="/graphs?r_id=<%=q.getId() %>&type=10"> Line</a>             
              </td> 
+           <%if(q.getPrediction()==1){ %>   
               <td>
              <a href="/graphs?r_id=<%=q.getId() %>&type=0"> Table</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=1"> Bar</a>,
@@ -348,7 +351,13 @@
              <a href="/predicts?r_id=<%=q.getId() %>&type=6"> Column</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=7"> Pie</a>,
              <a href="/predicts?r_id=<%=q.getId() %>&type=8"> Donut</a>
+             <a href="/predicts?r_id=<%=q.getId() %>&type=9"> Stepped Area</a>
+             <a href="/predicts?r_id=<%=q.getId() %>&type=10"> Line</a>
              </td> 
+             
+             <%} else{ %>
+             <td>No prediction Available<td>
+             <%} %>
              <%-- <td> <a href="/graphs?r_id=<%=q.getId() %>"> Graphs</a>
              </td> --%> 
              
@@ -423,12 +432,13 @@
 
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
-<script>
+<!-- <script>
 $(document).ready(function() {
     $('#dataTable').DataTable( {
         "pagingType": "full_numbers"
     } );
 } );
+</script> -->
 </body>
 
 </html>
